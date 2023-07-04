@@ -1,9 +1,10 @@
 import { states } from "../../states.js";
 import { seedData } from "../../seed.js";
 import { storeMutationsHelpers } from "../storeMutationsHelpers.js";
+import * as types from './mutation-types';
 
 export const mutations = {
-    CREATE_TASK(state)
+    [types.CREATE_TASK] (state)
     {
         const name = 'task ' + (state.tasks.length + 1);
 
@@ -12,21 +13,21 @@ export const mutations = {
         });
     },
 
-    UPDATE_TASK_TITLE(state, payload) {
+    [types.UPDATE_TASK_TITLE] (state, payload) {
         let task = payload;
         let t = state.tasks.find((t) => t.id === task.id);
 
         t.title = task.title;
     },
 
-    UPDATE_TASK_ADDITIONAL(state, payload) {
+    [types.UPDATE_TASK_ADDITIONAL] (state, payload) {
         let task = payload;
         let t = state.tasks.find((t) => t.id === task.id);
 
         t.additional = task.additional;
     },
 
-    CHANGE_TASK_STATE(state, payload) {
+    [types.CHANGE_TASK_STATE] (state, payload) {
         let task = payload;
         let t = state.tasks.find((t) => t.id === task.id);
 
@@ -48,11 +49,11 @@ export const mutations = {
         }
     },
 
-    DELETE_TASK(state, payload) {
+    [types.DELETE_TASK] (state, payload) {
         state.tasks = state.tasks.filter((t) => t.id !== payload.id);
     },
 
-    CLEAR_TASKS_DATA(state) {
+    [types.CLEAR_TASKS_DATA] (state) {
         state.tasks.length = 0;
     }
 }
