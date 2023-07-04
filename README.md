@@ -1,6 +1,6 @@
-# Fullstack Vue
+# Vuejs Stack
 
-## Single-file components - Calendar App
+## Personal Time Tracker
 
 1. Ensure you have `npm` installed.
 
