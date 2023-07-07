@@ -36,4 +36,20 @@ export const timeProvider = {
 
         return duration.asHours() / 8.0;
     },
+
+    getWeek(dateTime) {
+        return Array
+            .from(
+                { length: 7 },
+                (value, index) => moment(dateTime).weekday(index)
+            );
+    },
+
+    getDayOfWeek(dateTime) {
+        return moment(dateTime).format('dddd').substring(0,3)
+    },
+
+    getShortDate(dateTime) {
+        return moment(dateTime).format('DD-mm')
+    },
 }

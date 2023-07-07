@@ -1,4 +1,5 @@
 import { states } from './states.js';
+import { timeProvider } from './timeProvider.js';
 
 export const seedData = {
     createGuid() {
@@ -32,4 +33,23 @@ export const seedData = {
             },
         ];
     },
+
+    createDayData(date) {
+        return {
+            dayOfWeek: timeProvider.getDayOfWeek(date),
+            shortDate: timeProvider.getShortDate(date),
+            date: date,
+            isCurrentDay : false,
+        }
+    },
+
+    /**
+     * @param {Date} date 
+     * @returns 
+     */
+    createWeek(date) {
+        return timeProvider
+            .getWeek(date)
+            .map(day => this.createDayData(day))
+    }
 }

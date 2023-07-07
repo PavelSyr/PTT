@@ -8,6 +8,10 @@
                     :totalTime="getTotalTime"
                     @clear-all="onClearAllTasks"
                 ></header-summary>
+                <week-component
+                    :daysData="getCurrentWeek"
+                >
+                </week-component>
             </div>
         </section>
         <div id="app-tasks-rows">
@@ -48,6 +52,7 @@
 import TaskEntry from './components/TaskEntry.vue';
 import PopupsContainer from './components/PopupsContainer.vue'
 import HeaderSummary from './components/HeaderSummary.vue';
+import WeekComponent from './components/calendar/WeekComponent.vue'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -57,12 +62,14 @@ export default {
         'task-entry': TaskEntry,
         'popups-container': PopupsContainer,
         'header-summary': HeaderSummary,
+        'week-component': WeekComponent,
     },
 
     computed: {
         ...mapGetters({
             getTasks: 'data/getTasks',
             getTotalTime: 'data/getTotalTime',
+            getCurrentWeek: 'data/getCurrentWeek',
             getPopups: 'ui/getPopups',
         }),
     },

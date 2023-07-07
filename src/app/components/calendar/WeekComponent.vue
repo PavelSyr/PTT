@@ -3,7 +3,9 @@
         <day-of-week
          v-for="data in daysData"
          :key="data.id"
-         :data="data"
+         :dayOfWeek="data.dayOfWeek"
+         :shortDate="data.shortDate"
+         @click="()=>selectDay(data)"
         >
         </day-of-week>
     </div>
@@ -13,33 +15,24 @@
 import DayOfWeek from './DayOfWeek.vue';
 
 export default {
-    name: "Week",
+    name: "WeekComponent",
     
     components: {
         "day-of-week": DayOfWeek,
-    }
+    },
 
     props: {
         daysData: {
             type: Array,
             required: false,
-            default: [],
+            default: () => [],
         },
     },
 
-    computed: {
-
-    },
-
-    data() {
-        return {
-
-        };
-    },
-
     methods: {
-
+        selectDay(dayData) {
+            console.log(dayData);
+        },
     }
-
 }
 </script>
