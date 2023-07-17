@@ -5,6 +5,7 @@
          :key="data.id"
          :dayOfWeek="data.dayOfWeek"
          :shortDate="data.shortDate"
+         :isCurrentDay="data.isCurrentDay"
          @click="()=>selectDay(data)"
         >
         </day-of-week>

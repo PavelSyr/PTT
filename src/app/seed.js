@@ -34,12 +34,12 @@ export const seedData = {
         ];
     },
 
-    createDayData(date) {
+    createDayData(date, isCurrentDay) {
         return {
             dayOfWeek: timeProvider.getDayOfWeek(date),
             shortDate: timeProvider.getShortDate(date),
             date: date,
-            isCurrentDay : false,
+            isCurrentDay : isCurrentDay,
         }
     },
 
@@ -48,8 +48,9 @@ export const seedData = {
      * @returns 
      */
     createWeek(date) {
+        const timestamp = date.getTime();
         return timeProvider
             .getWeek(date)
-            .map(day => this.createDayData(day))
+            .map(day => this.createDayData(day, day === timestamp))
     }
 }

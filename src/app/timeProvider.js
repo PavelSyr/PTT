@@ -41,7 +41,7 @@ export const timeProvider = {
         return Array
             .from(
                 { length: 7 },
-                (value, index) => moment(dateTime).weekday(index)
+                (value, index) => moment(dateTime).weekday(index).valueOf()
             );
     },
 
