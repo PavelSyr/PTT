@@ -50,6 +50,6 @@ export const timeProvider = {
     },
 
     getShortDate(dateTime) {
-        return moment(dateTime).format('DD-mm')
+        return moment(dateTime).format('DD-MM')
     },
 }
