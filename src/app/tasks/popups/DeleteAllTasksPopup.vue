@@ -21,17 +21,20 @@
 </template>
 
 <script lang="js">
+import { mapGetters } from 'vuex';
+
 export default {
     name: "deleteAllTasksPopup",
 
-    props: {
-        tasksData: {
-            type: Array,
-            required: true,
-        }
-    },
-
     computed: {
+        ...mapGetters({
+            getTasks: 'data/getTasks',
+        }),
+
+        tasksCount() {
+            return this.tasksData.length;
+        },
+
         tasksText() {
             return this.tasksCount > 1 ? 'tasks' : 'task';
         }
@@ -39,17 +42,26 @@ export default {
     
     data() {
         return {
-            tasksCount: this.tasksData.length,
-        };
+            tasksData: [],
+        }
+    },
+
+    created() {
+        this.tasksData = this.getTasks;
     },
 
     methods: {
         onClose() {
-            this.$emit("close");
+            this.close();
         },
         
         onSubmit() {
-            this.$emit("submit");
+            this.$store.dispatch('data/clearTasksData');
+            this.close();
+        },
+
+        close(){
+            this.$router.go(-1);
         },
     },
 }

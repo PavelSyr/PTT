@@ -41,7 +41,7 @@ import { states } from '../states.js';
 import { timeProvider } from '../timeProvider';
 
 export default {
-    name: "PTT",
+    name: "TaskListItem",
 
     props: {
         taskData: {
@@ -92,7 +92,7 @@ export default {
 
         isInProgress() {
             return this.taskData.state === states.inProgress;
-        }
+        },
     },
 
     methods: {

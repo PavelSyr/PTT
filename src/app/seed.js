@@ -9,10 +9,10 @@ export const seedData = {
         });
     },
 
-    creatTask(title) {
+    creatTask(title, id) {
         const now = new Date();
         return {
-            id: this.createGuid(),
+            id: id ?? this.createGuid(),
             title: title,
             createdAt: now,
             state: states.idle,
@@ -26,10 +26,10 @@ export const seedData = {
     createTasksDev() {
         return [
             {
-                ...this.creatTask('task 1'),
+                ...this.creatTask('task 1', "test1111-1111-1111-1111-2222test1111"),
             },
             {
-                ...this.creatTask('task 2'),
+                ...this.creatTask('task 2', 'test2222-2222-2222-2222-2222test2222'),
             },
         ];
     },

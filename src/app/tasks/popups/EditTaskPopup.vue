@@ -2,7 +2,7 @@
     <div class="modal is-active">
         <div class="modal-background" @click="onClose">
         </div>
-        <div class="modal-card">
+        <div class="modal-card" v-if="exist">
             <header class="modal-card-head">
                 <p class="modal-card-title">Edit Task</p>
                 <button class="delete" aria-label="close" @click="onClose"></button>
@@ -45,23 +45,38 @@
                 <button class="button" @click="onClose">Cancel</button>
             </footer>
         </div>
+        <task-not-found
+            v-else
+            :id="id"
+            @close="onClose"
+        ></task-not-found>>
     </div>
 </template>
 
 <script lang="js">
+import { mapGetters } from 'vuex';
 import { timeProvider } from '../../timeProvider';
+import TaskNotFound from './TaskNotFound.vue';
 
 export default {
     name: "editTaskPopup",
 
+    components: {
+        'task-not-found' : TaskNotFound
+    },
+
     props: {
-        taskData: {
-            type: Object,
-            required: true,
-        }
+        id: {
+            type: String,
+            required: false,
+        },
     },
 
     computed: {
+        ...mapGetters({
+            getTasks: 'data/getTasks',
+        }),
+
         formatedTotal() {
             return timeProvider.formatedDurationInHours(this.total + this.additional);
         },
@@ -71,15 +86,32 @@ export default {
         },
 
         formattedCreatedAt() {
-            return timeProvider.formattedDateTime(this.taskData.createdAt);
+            return timeProvider.formattedDateTime(this.createdAt);
         },
     },
 
     data() {
         return {
-            title: this.taskData.title,
-            total: this.taskData.total,
-            additional: this.taskData.additional,
+            exist: false,
+            title: undefined,
+            total: 0,
+            additional: 0,
+            createdAt: undefined,
+        }
+    },
+
+    mounted() {
+        let ts = this.getTasks;
+        let taskData = ts.find(t => t.id === this.id);
+
+        this.exist = taskData !== undefined;
+
+        if (this.exist)
+        {
+            this.title = taskData.title;
+            this.total = taskData.total;
+            this.additional = taskData.additional;
+            this.createdAt = taskData.createdAt;
         }
     },
 
@@ -93,15 +125,24 @@ export default {
         },
 
         onClose() {
-            this.$emit("close");
+            this.close();
         },
 
         onSubmit() {
-            this.$emit("submit", {
+            const payload = {
                 title: this.title,
                 additional: this.additional,
-                id: this.taskData.id,
-            });
+                id: this.id,
+            }
+
+            this.$store.dispatch('data/updateTaskTitle', payload);
+            this.$store.dispatch('data/updateTaskAdditional', payload);
+            this.close();
+        },
+
+        close()
+        {
+            this.$router.go(-1);
         },
     },
 }
