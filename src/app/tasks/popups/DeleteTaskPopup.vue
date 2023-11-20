@@ -3,34 +3,36 @@
         <div class="modal-background" @click="onClose">
         </div>
         <div class="modal-card" v-if="exist">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Delete Task</p>
-                <div class="modal-card-title">
-                    <p class="heading">Created at</p>
-                    <p class="subtitle">{{ formattedCreatedAt }}</p>
-                </div>
-                <div class="modal-card-title">
-                    <p class="heading">Duration</p>
-                    <p class="subtitle">{{ formatedTotal }}</p>
-                </div>
-                <button class="delete" aria-label="close" @click="onClose"></button>
-            </header>
-            <section class="modal-card-body">
-                <div class="subtitle">
-                    <span>{{ title }}</span>
-                </div>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-danger" @click="onSubmit">Delete</button>
-                <button class="button" @click="onClose">Cancel</button>
-            </footer>
+            <form @submit="onSubmit" class="ui form">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Delete Task</p>
+                    <div class="modal-card-title">
+                        <p class="heading">Created at</p>
+                        <p class="subtitle">{{ formattedCreatedAt }}</p>
+                    </div>
+                    <div class="modal-card-title">
+                        <p class="heading">Duration</p>
+                        <p class="subtitle">{{ formatedTotal }}</p>
+                    </div>
+                    <button class="delete" type="button" aria-label="close" @click="onClose"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="subtitle">
+                        <span>{{ title }}</span>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-danger" type="submit">Delete</button>
+                    <button class="button" type="button" @click="onClose">Cancel</button>
+                </footer>
+            </form>
         </div>
         <task-not-found v-else
             :id="id"
             @close="onClose"
-        ></task-not-found>>
-    </div>
-</template>
+            ></task-not-found>>
+        </div>
+    </template>
 
 <script lang="js">
 import { mapGetters } from 'vuex';
@@ -99,7 +101,9 @@ export default {
             this.close()
         },
 
-        onSubmit() {
+        onSubmit(evt) {
+            evt.preventDefault();
+
             const payload = {
                 id : this.id,
             };

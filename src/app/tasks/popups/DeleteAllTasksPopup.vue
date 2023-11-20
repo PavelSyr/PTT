@@ -3,19 +3,21 @@
         <div class="modal-background" @click="onClose">
         </div>
         <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Delete All Tasks</p>
-                <button class="delete" aria-label="close" @click="onClose"></button>
-            </header>
-            <section class="modal-card-body">
-                <div class="subtitle">
-                    <span>Are you sure you want to delete {{ tasksCount }} {{ tasksText }}?</span>
-                </div>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-danger" @click="onSubmit">Delete</button>
-                <button class="button" @click="onClose">Cancel</button>
-            </footer>
+            <form @submit="onSubmit" class="ui form">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Delete All Tasks</p>
+                    <button class="delete" type="button" aria-label="close" @click="onClose"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="subtitle">
+                        <span>Are you sure you want to delete {{ tasksCount }} {{ tasksText }}?</span>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-danger" type="submit">Delete</button>
+                    <button class="button" type="button" @click="onClose">Cancel</button>
+                </footer>
+            </form>
         </div>
     </div>
 </template>
@@ -55,7 +57,9 @@ export default {
             this.close();
         },
         
-        onSubmit() {
+        onSubmit(evt) {
+            evt.preventDefault();
+
             this.$store.dispatch('data/clearTasksData');
             this.close();
         },

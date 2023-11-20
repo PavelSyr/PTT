@@ -3,47 +3,49 @@
         <div class="modal-background" @click="onClose">
         </div>
         <div class="modal-card" v-if="exist">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Edit Task</p>
-                <button class="delete" aria-label="close" @click="onClose"></button>
-            </header>
-            <section class="modal-card-body">
-                <div class="columns has-text-centered">
-                    <div class="column">
-                        <p class="heading">Created at</p>
-                        <p class="subtitle">{{ formattedCreatedAt }}</p>
-                    </div>
-                    <div class="column">
-                        <p class="heading">Duration</p>
-                        <p class="subtitle">{{ formatedTotal }}</p>
-                    </div>
-                    <div class="column">
-                        <p class="heading">Additional</p>
-                        <div class="level">
-                            <div class="level-item">
-                                <button class="button is-small" @click="onMinus">
-                                    <i class="fa fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-                            <div class="level-item">
-                                <span class="subtitle">{{ formatedAdditional }}</span>
-                            </div>
-                            <div class="level-item">
-                                <button class="button is-small" @click="onPlus">
-                                    <i class="fa fa-solid fa-plus"></i>
-                                </button>
+            <form @submit="onSubmit" class="ui form">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Edit Task</p>
+                    <button class="delete" type="button" aria-label="close" @click="onClose"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="columns has-text-centered">
+                        <div class="column">
+                            <p class="heading">Created at</p>
+                            <p class="subtitle">{{ formattedCreatedAt }}</p>
+                        </div>
+                        <div class="column">
+                            <p class="heading">Duration</p>
+                            <p class="subtitle">{{ formatedTotal }}</p>
+                        </div>
+                        <div class="column">
+                            <p class="heading">Additional</p>
+                            <div class="level">
+                                <div class="level-item">
+                                    <button class="button is-small" type="button" @click="onMinus">
+                                        <i class="fa fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="level-item">
+                                    <span class="subtitle">{{ formatedAdditional }}</span>
+                                </div>
+                                <div class="level-item">
+                                    <button class="button is-small" type="button" @click="onPlus">
+                                        <i class="fa fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <input class="input is-primary" type="text" placeholder="Primary input" v-model="title">
-                </div>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-success" @click="onSubmit">Save changes</button>
-                <button class="button" @click="onClose">Cancel</button>
-            </footer>
+                    <div>
+                        <input class="input is-primary" type="text" placeholder="Primary input" v-model="title">
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" type="submit">Save changes</button>
+                    <button class="button" type="button" @click="onClose">Cancel</button>
+                </footer>
+            </form>
         </div>
         <task-not-found
             v-else
@@ -128,7 +130,9 @@ export default {
             this.close();
         },
 
-        onSubmit() {
+        onSubmit(evt) {
+            evt.preventDefault();
+
             const payload = {
                 title: this.title,
                 additional: this.additional,
